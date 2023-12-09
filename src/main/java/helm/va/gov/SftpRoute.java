@@ -16,6 +16,9 @@ public class SftpRoute extends RouteBuilder {
     @ConfigProperty(name = "sftpendpoint")
     public String sftpEndpoint;
 
+    @ConfigProperty(name = "ids", defaultValue = "")
+    public String ids;
+
     @Override
     public void configure() throws Exception {
 //        uploadInputFile();
@@ -34,7 +37,7 @@ public class SftpRoute extends RouteBuilder {
         from(sftpEndpoint)
                 .split(RecordTokenizerExpression.createExpression())
                 .process(new MapperProcessor())
-                .process(new ServiceProcessor())
+                .process(new ServiceProcessor(ids.split(",")))
                 .log("Processing...");
     }
 
