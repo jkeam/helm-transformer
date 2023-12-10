@@ -29,11 +29,6 @@ public class SftpRoute extends RouteBuilder {
      * Polls sftp for files to process.
      */
     private void processFiles() {
-        TokenizerExpression tokenizerExpression = new TokenizerExpression();
-        String token = "CTL\\^\\^\\^";
-        tokenizerExpression.setToken(token);
-        tokenizerExpression.setRegex("true");
-
         from(sftpEndpoint)
                 .split(RecordTokenizerExpression.createExpression())
                 .process(new MapperProcessor())
